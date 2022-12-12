@@ -1,5 +1,6 @@
 const express = require('express');
-const databaseConnect = require("./connection/db")
+const databaseConnect = require("./connection/db");
+const testData = require("./connection/look_up");
 const app = express();
 const port = 3000;
 
@@ -14,3 +15,5 @@ app.listen(port, () => {
 })
 
 databaseConnect();
+
+testData();
