@@ -16,14 +16,17 @@ app.listen(port, () => {
 })
 
 const accountCreation = async () => {
-    const Login = new User({
-        date: date,
-        username: "Test Username",
-        password: "User-Password",
-        body: "This is a test user."
-    })
+    try{
+        const Login = new User({
+            username: "Test Username3",
+            password: "User-Password",
+            body: "This is a test user."
+        })
+        await Login.save()
+    } catch(err){
+        console.log(err)
+    }
 
-    await Login.save()
 }
 databaseConnect();
 accountCreation();
