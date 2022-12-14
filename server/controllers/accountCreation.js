@@ -10,7 +10,7 @@ const accountCreation = async (username, password, description) => {
         })
         await Login.save()
     } catch(err){
-        console.log(err)
+        return err
     }
 }
 

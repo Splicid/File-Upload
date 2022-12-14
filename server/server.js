@@ -1,23 +1,32 @@
 const express = require('express');
 const databaseConnect = require("./connection/db");
 const testData = require("./connection/look_up");
-const dcrypter = require("./controllers/encrypt")
-const accountCreation = require("./controllers/accountCreation")
+const dcrypter = require("./controllers/encrypt");
+const accountCreation = require("./controllers/accountCreation");
+const bodyParser = require('body-parser');
+const path = require("path");
 const app = express();
 const port = 3000;
-const date = new Date();
 
+app.use(bodyParser.urlencoded({ extended: true })); 
+absolutePath = path.join( __dirname, "../", "/client/static/index.html");
+
+console.log(absolutePath)
 
 app.get('/', (req, res) => {
-    res.send('Hello World')
+    res.sendFile(absolutePath)
 })
 
-app.listen(port, () => {
+app.post('/test', (req, res) => {
+    console.log(req.body)
+  })
+
+app.listen(port, async () => {
     console.log(`We are currently running on ${port}`)
     databaseConnect();
+    const data  = await accountCreation("luisabreu","password", "this is a test account")
 })
 
-accountCreation("luisabreu","password", "this is a test account")
 
 
 //dcrypter.encryptor("Luis");
