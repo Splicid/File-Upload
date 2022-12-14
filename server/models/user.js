@@ -1,6 +1,7 @@
 const { mongoose } = require('mongoose');
 const { Schema } = mongoose;
 
+// This is the scchema for the database
 const userSchema = new Schema({
     createdAt:{
         type: Date,
