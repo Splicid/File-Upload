@@ -18,8 +18,8 @@ app.get('/', (req, res) => {
 })
 
 app.post('/test', (req, res) => {
-    console.log(req.body)
-  })
+    res.send("Hello")
+})
 
 app.listen(port, async () => {
     console.log(`We are currently running on ${port}`)
