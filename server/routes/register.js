@@ -6,7 +6,7 @@ const User = require("../models/user")
 
 router.use(bodyParser.urlencoded({ extended: true })); 
 router.post("/", async (req, res, next) => {
-    res.send("Login")
+    res.send("register")
     next();
 })
 

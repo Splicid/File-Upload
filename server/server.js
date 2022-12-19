@@ -3,16 +3,20 @@ const databaseConnect = require("./connection/db");
 const testData = require("./connection/look_up");
 const dcrypter = require("./controllers/encrypt");
 const accountCreation = require("./controllers/accountCreation");
-const userRouter = require("./routes/login");
+const userLogin = require("./routes/login");
+const userRegister = require('./routes/register');
 const bodyParser = require('body-parser');
+const initializePassport = require('./passport-config')
 const path = require("path");
 const app = express();
 const port = 3000;
+const passport = require('passport')
 
-app.use("/users", userRouter)
+
+app.use("/login", userLogin)
+app.use("/register", userRegister)
 app.set("view engine", "ejs")
 app.use(bodyParser.urlencoded({ extended: true })); 
-
 
 app.get("/", (req, res) => {
     res.render("index")

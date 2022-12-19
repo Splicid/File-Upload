@@ -1,5 +1,6 @@
 const { mongoose } = require('mongoose');
 const { Schema } = mongoose;
+const passportLocalMongoose = require('passport-local-mongoose');
 
 // This is the scchema for the database
 const userSchema = new Schema({
@@ -12,6 +13,7 @@ const userSchema = new Schema({
     body: String
 });
 
+userSchema.plugin(passportLocalMongoose);
 const User = mongoose.model('User', userSchema)
 
 
