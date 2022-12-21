@@ -1,22 +1,37 @@
-const express = require('express');
-const databaseConnect = require("./connection/db");
-const testData = require("./connection/look_up");
-const dcrypter = require("./controllers/encrypt");
-const accountCreation = require("./controllers/accountCreation");
-const userLogin = require("./routes/login");
-const userRegister = require('./routes/register');
-const bodyParser = require('body-parser');
-const initializePassport = require('./passport-config')
-const path = require("path");
-const app = express();
-const port = 3000;
-const passport = require('passport')
-
+const express           = require('express');
+const session           = require("express-session");
+const databaseConnect   = require("./connection/db");
+const testData          = require("./connection/look_up");
+const dcrypter          = require("./controllers/encrypt");
+const accountCreation   = require("./controllers/accountCreation");
+const userLogin         = require("./routes/login");
+const userRegister      = require('./routes/register');
+const bodyParser        = require('body-parser');
+const User              = require("./models/user")
+const path              = require("path");
+const app               = express();
+const port              = 3000;
+const passport          = require('passport');
+const dotenv            = require('dotenv');
+const findUser = require('./connection/look_up');
+const LocalStrategy     = require('passport-local').Strategy
+dotenv.config();
 
 app.use("/login", userLogin)
 app.use("/register", userRegister)
 app.set("view engine", "ejs")
 app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(session({
+    secret: process.env.SESSIONKEY,
+    resave: false,
+    saveUninitialized: true
+}));
+app.use(express.json());
+
+//passport.js
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.get("/", (req, res) => {
     res.render("index")
@@ -26,6 +41,8 @@ app.listen(port, async () => {
     console.log(`We are currently running on ${port}`)
     databaseConnect();
 })
+
+
 
 
 //dcrypter.encryptor("Luis");

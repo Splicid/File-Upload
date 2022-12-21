@@ -1,12 +1,10 @@
 const User = require("../models/user")
 
 // this function creates the account and saves it to the mongodb
-const accountCreation = async (username, password, description) => {
+const accountCreation = async (username) => {
     try{
         const Login = new User({
-            username: username,
-            password: password,
-            body: description
+            email: username,
         })
         await Login.save()
         return true

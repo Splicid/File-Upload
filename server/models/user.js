@@ -8,9 +8,7 @@ const userSchema = new Schema({
         type: Date,
         default: () => Date.now(),
     },
-    username: { type: String, required: true, index: { unique: true }},
-    password: { type: String, required: true, select: false },
-    body: String
+    email: { type: String, required: true, index: { unique: true }},
 });
 
 userSchema.plugin(passportLocalMongoose);

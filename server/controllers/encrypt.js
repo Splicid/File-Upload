@@ -8,7 +8,7 @@ const encryptor = async (password) => {
         // Store hash in your password DB.
         console.log(hash)
 
-            //Check if password equals 
+        //Check if password equals 
         bcrypt.compare(password, hash).then(function(result) {
         // result == true
             console.log(result)

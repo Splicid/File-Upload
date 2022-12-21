@@ -3,15 +3,23 @@ const router = express.Router();
 const accountCreation = require("../controllers/accountCreation");
 const bodyParser = require('body-parser');
 const User = require("../models/user")
+const crypto = require('crypto')
 
 router.use(bodyParser.urlencoded({ extended: true })); 
+
 router.post("/", async (req, res, next) => {
     res.render("register")
-    next();
+    //console.log(req.body.username)
+    //console.log(req.body.password)
 })
 
-router.get("/new", (req, res) => {
-    res.send("User New Form")
+// Not finished 
+router.get("/signup", (req, res) => {
+    const salt = crypto.randomBytes(16);
+    crypto.pbkdf2(req,body.password, salt, 310000, 32, 'sha256', (err, hashedPassword) => {
+        if (err) {return next(err)}
+
+    })
 })
 
  //const data  = await accountCreation(req.body.username, req.body.password, "this is a test account")
