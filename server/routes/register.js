@@ -16,19 +16,25 @@ router.post("/", async (req, res) => {
 
 // Not finished 
 router.post("/signup", (req, res) => {
-    res.render("register")
+    console.log(req.body.email)
     const salt = crypto.randomBytes(16);
     crypto.pbkdf2(req.body.password, salt, 310000, 32, 'sha256', async (err, hashedPassword) => {
-        if (err) {return next(err)}
+        if (err) { return next("err") }
         const Login = new User({
             email: req.body.email,
-            password: 'hashedPassword',
+            password: 'hashedPassword1',
         }, function(err) {
-            if (err) { return next(err); }
+            if (err) { return next("err"); }
         })
-        await Login.save()
+        await Login.save( (err) => {
+            if(err){
+                console.log("error")
+            }else {
+                res.render("index")
+            }
+        })
     })
-    console.log(req.body.email, 'hashedPassword')
+    //console.log(req.body.email, 'hashedPassword')
 })
 
  //const data  = await accountCreation(req.body.username, req.body.password, "this is a test account")
