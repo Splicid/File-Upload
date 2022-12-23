@@ -8,10 +8,16 @@
 </head>
 <body>
     <h1> Login Page </h1>
-    <form action="login/UserPage" method="get">
-        <input type="text" name="email">
-        <input type="text" name="password">
-        <button type="submit"> Submit </button> 
-    </form>    
+    <form action="login/UserPage" method="post">
+        <section>
+            <label for="username">Username</label>
+            <input id="username" name="email" type="text" autocomplete="username" required autofocus>
+        </section>
+        <section>
+            <label for="current-password">Password</label>
+            <input id="current-password" name="password" type="password" autocomplete="current-password" required>
+        </section>
+        <button type="submit">Sign in</button>
+    </form>   
 </body>
 </html>

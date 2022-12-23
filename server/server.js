@@ -1,7 +1,6 @@
 const express           = require('express');
 const session           = require("express-session");
 const databaseConnect   = require("./connection/db");
-const testData          = require("./connection/look_up");
 const dcrypter          = require("./controllers/encrypt");
 const accountCreation   = require("./controllers/accountCreation");
 const userLogin         = require("./routes/login");
@@ -13,7 +12,6 @@ const app               = express();
 const port              = 3000;
 const passport          = require('passport');
 const dotenv            = require('dotenv');
-const findUser = require('./connection/look_up');
 const LocalStrategy     = require('passport-local').Strategy
 dotenv.config();
 
@@ -29,8 +27,7 @@ app.use(session({
 app.use(express.json());
 
 //passport.js
-app.use(passport.initialize());
-app.use(passport.session());
+
 
 
 app.get("/", (req, res) => {

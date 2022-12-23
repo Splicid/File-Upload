@@ -10,7 +10,7 @@ router.post("/", async (req, res) => {
 })
 
 router.get("/UserPage", (req, res) => {
-    res.render("test", {data: "testasdadas"})
+    //res.render("test", {data: "testasdadas"})
 })
 
  //const data  = await accountCreation(req.body.username, req.body.password, "this is a test account")
