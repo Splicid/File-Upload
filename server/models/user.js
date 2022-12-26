@@ -8,12 +8,12 @@ const userSchema = new Schema({
         type: Date,
         default: () => Date.now(),
     },
-    email: { type: String, required: true, index: { unique: true }},
+    username: { type: String, required: true, index: { unique: true }},
     password: { type: String, required: true, select: false }
 });
 
 userSchema.plugin(passportLocalMongoose);
-const User = mongoose.model('User', userSchema)
+
+module.exports = mongoose.model('User', userSchema, 'User')
 
 
-module.exports = User;
