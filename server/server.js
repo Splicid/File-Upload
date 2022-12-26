@@ -9,6 +9,7 @@ const bodyParser        = require('body-parser');
 const User              = require("./models/user")
 const path              = require("path");
 const app               = express();
+var jwt                 = require('jsonwebtoken');
 const port              = 3000;
 const flash             = require('connect-flash');
 const LocalStrategy     = require('passport-local').Strategy
@@ -18,8 +19,7 @@ const connectEnsureLogin = require('connect-ensure-login')
 dotenv.config();
 
 //app.use("/login", userLogin)
-app.use(flash());
-app.use("/register", userRegister)
+//app.use("/register", userRegister)
 app.set("view engine", "ejs")
 app.use(express.json());
 
@@ -56,6 +56,43 @@ app.get("/", (req, res) => {
 // app.get('/login', (req, res) => {
 //     res.render("index")
 // });
+
+
+app.post("/register", function (req, res) {
+    User.register(new User({ username: req.body.username }), req.body.password, function (err, user) {
+        if (err) {
+            res.json({success: false, message: "Account was not created " + err})
+        } else{
+            res.json({seccess: true, message: "Account was created"})
+        }
+    });
+});
+
+app.post("/login", function (req, res) {
+    if (!req.body.username) {
+        res.json({ success: false, message: "Username was not given" })
+    }
+    else if (!req.body.password) {
+        res.json({ success: false, message: "Password was not given" })
+    }
+    else {
+        passport.authenticate("local", function (err, user, info) {
+            console.log(err)
+            if (err) {
+                res.json({ success: false, message: err });
+            }
+            else {
+                if (!user) {
+                    res.json({ success: false, message: "username or password incorrect" });
+                }
+                else {
+                    const token = jwt.sign({ userId: user._id, username: user.username }, process.env.PASSWORD, { expiresIn: "24h" });
+                    res.json({ success: true, message: "Authentication successful", token: token });
+                }
+            }
+        })(req, res);
+    }
+});
 
 app.post('/login', passport.authenticate('local', { failureRedirect: '/fail'}),  function(req, res) {
 	console.log(req.user)
@@ -94,7 +131,7 @@ app.get('/secret', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
 //absolutePath = path.join( __dirname, "../", "/client/static/index.html");
 //Used to find user if it exists
 const testing = async () => {
-    const findUser = await User.findOne({username: "luis"}).select('password');
+    const findUser = await User.findOne({username: "luis"}).select('body');
     console.log(findUser)
 }
 testing()
