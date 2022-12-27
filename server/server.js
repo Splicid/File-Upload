@@ -58,7 +58,7 @@ app.get("/", (req, res) => {
 // });
 
 
-app.post("/register", function (req, res) {
+app.post("/signup", function (req, res) {
     User.register(new User({ username: req.body.username }), req.body.password, function (err, user) {
         if (err) {
             res.json({success: false, message: "Account was not created " + err})
@@ -68,7 +68,7 @@ app.post("/register", function (req, res) {
     });
 });
 
-app.post("/login", function (req, res) {
+app.post("/logging", function (req, res) {
     if (!req.body.username) {
         res.json({ success: false, message: "Username was not given" })
     }
@@ -94,14 +94,16 @@ app.post("/login", function (req, res) {
     }
 });
 
-app.post('/login', passport.authenticate('local', { failureRedirect: '/fail'}),  function(req, res) {
+app.post('/login', passport.authenticate('local', { failureRedirect: '/fail' }),  function(req, res) {
 	console.log(req.user)
 	res.redirect('/dashboard')
 });
 
-app.get('/logout', function(req, res) {
-    req.logout();
-    res.redirect('/login');
+app.get('/logout', function(req, res, next) {
+    req.logout( (err) => {
+        if (err) {return next(err)}
+        res.redirect('/');
+    });
 });
 
 app.get('/dashboard', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
