@@ -1,0 +1,48 @@
+body{
+    background-color: black;
+}
+
+#container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+#inside-container{
+    background-color: azure;
+    height: 50%;
+    width: 50%;
+    justify-content: space-around;
+    align-items: center;
+    display: flex;
+    position: absolute;
+}
+
+#login{
+    padding: clamp(1rem, calc(2vw + 2vh), 3.2rem);
+    font-size: clamp(1rem, calc(1vw + 1vh), 3.2rem);
+    border-style: none;
+    background-color: bisque;
+    box-shadow: 5px 10px;
+}
+
+#register{
+    padding: clamp(1rem, calc(2vw + 2vh), 3.2rem);
+    font-size: clamp(1rem, calc(1vw + 1vh), 3.2rem);
+    border-style: none;
+    background-color: bisque;
+    box-shadow: 5px 10px;
+}
+
+#login:hover{
+    background-color: goldenrod;
+    box-shadow: none;
+}
+
+#register:hover{
+    background-color: goldenrod;
+    box-shadow: none;
+}
