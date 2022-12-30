@@ -37,16 +37,17 @@ router.get('/', (req, res) => {
 })
 
 router.post('/logging', passport.authenticate('local', { failureRedirect: '/' }),  function(req, res) {
-	console.log(req.user)
+	//console.log(req.user)
 	res.redirect('/login/dashboard')
 });
 
 router.get('/dashboard', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
-    res.send(`Hello ${req.user.username}. Your session ID is ${req.sessionID} 
-     and your session expires in ${req.session.cookie.maxAge} 
-     milliseconds.<br><br>
-     <a href="logout">Log Out</a><br><br>
-     <a href="secret">Members Only</a>`);
+    // res.send(`Hello ${req.user.username}. Your session ID is ${req.sessionID} 
+    //  and your session expires in ${req.session.cookie.maxAge} 
+    //  milliseconds.<br><br>
+    //  <a href="logout">Log Out</a><br><br>
+    //  <a href="secret">Members Only</a>`);
+    res.render('file-page')
 });
 
 router.get('/secret', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
