@@ -28,8 +28,12 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-router.get("/", (req, res) => {
-    res.render("login")
+router.get('/', (req, res) => {
+    if(!req.isAuthenticated()){
+        res.render('login')
+    } else{
+        res.redirect('/login/dashboard')
+    }
 })
 
 router.post('/logging', passport.authenticate('local', { failureRedirect: '/' }),  function(req, res) {
