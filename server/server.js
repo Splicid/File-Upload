@@ -7,12 +7,15 @@ const userRegister      = require('./routes/register');
 const bodyParser        = require('body-parser');
 const User              = require("./models/user")
 const path              = require("path");
+const multer  = require('multer');
 const app               = express();
 const jwt               = require('jsonwebtoken');
 const port              = 3000;
 const passport          = require('passport');
 const dotenv            = require('dotenv');
 const connectEnsureLogin = require('connect-ensure-login')
+const Grid = require('gridfs-stream');
+const {GridFsStorage} = require('multer-gridfs-storage');
 dotenv.config();
 
 app.use("/login", userLogin)
@@ -26,11 +29,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //passport.js
 
-const test = async () => {
-    const Login = new User({ username: "luis", password: 'luis'})
-    await Login.save()
-}
-//test()
+
+    // const Login = new User({ username: "luis", password: 'luis'})
+    // await Login.save()
+const storage = new GridFsStorage({ db:databaseConnect() })
+const upload = multer({ storage });
+
+
+app.post('/upload', upload.single('filename'), (req, res, next) => {
+    console.log(req, res )
+})
+
 app.get("/", (req, res) => {
     res.render("homepage")
 })
@@ -54,6 +63,7 @@ app.get("/", (req, res) => {
 app.listen(port, async () => {
     console.log(`We are currently running on ${port}`)
     databaseConnect();
+
 })
 
 

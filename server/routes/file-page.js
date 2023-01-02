@@ -1,10 +1,14 @@
-import { createReadStream } from 'fs';
-
 const Grid = require('gridfs-stream');
 const databaseConnect   = require("./connection/db");
 
-const gfs = Grid(databaseConnect(),)
+const file_upload = () => {
+    const grid = new Grid(databaseConnect(), 'fs');
+    const buffer = new Buffer.from("Hello World");
+    grid.put(buffer, {metadata:{category: 'text'}, content_type: 'text'}, (err, fileinfo) => {
+        if(err){
+            console.log("Finished writing file to mongo")
+        }
+    });
+}
 
-const writestream = gfs.createWriteStream({
-    filename: 'test_file.txt'
-})
+module.exports = file_upload
