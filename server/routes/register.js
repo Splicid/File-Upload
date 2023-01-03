@@ -1,9 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const accountCreation = require("../controllers/accountCreation");
 const bodyParser = require('body-parser');
 const User = require("../models/user")
-const crypto = require('crypto')
 
 
 router.use(bodyParser.urlencoded({ extended: true })); 
@@ -23,7 +21,4 @@ router.post("/signup", function (req, res) {
     });
 });
 
-
-
- //const data  = await accountCreation(req.body.username, req.body.password, "this is a test account")
 module.exports = router;
