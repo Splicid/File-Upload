@@ -9,6 +9,7 @@ const main = async () => {
     const conn = mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
         .then((result ) => console.log('connected to db' + result))
         .catch((err) => console.log(err))
+        
 }
 
 

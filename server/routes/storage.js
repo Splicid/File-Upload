@@ -1,22 +1,41 @@
 const express = require("express");
 const router = express.Router();
 const bodyParser = require('body-parser');
-const storagemiddle = require('../middleware/storage')
+const {upload} = require('../middleware/storage')
+const dotenv = require('dotenv');
+const { default: mongoose } = require('mongoose');
+const { GridFSBucket } = require('mongodb');
+dotenv.config();
+
+const conn = mongoose.createConnection(process.env.URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+
+// init gfs
+let gfs;
+conn.once("open", () => {
+  // init stream
+  gfs = new mongoose.mongo.GridFSBucket(conn.db, {
+    bucketName: "uploads"
+  });
+});
 
 router.use(bodyParser.urlencoded({ extended: true })); 
 
-router.post('/', storagemiddle.single('filename'), (req, res) => {
-    console.log()
+router.post('/', upload.single('filename'), (req, res) => {
+    
     res.end()
 })
 
-router.get('/', storagemiddle.single('filename'), (req, res) => {
-    console.log()
+router.get('/', (req, res) => {
+    console.log(upload)
     res.end()
 })
 
-router.get('/getting', (req, res) => {
-    const file = gfs
+router.get('/getting', async (req, res) => {
+    console.log(gfs)
+    res.end()
 })
 
 
