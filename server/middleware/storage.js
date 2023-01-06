@@ -2,9 +2,6 @@ const crypto = require('crypto');
 const multer  = require('multer');
 const {GridFsStorage} = require('multer-gridfs-storage');
 const dotenv = require('dotenv');
-const databaseConnect = require("../connection/db");
-const { default: mongoose } = require('mongoose');
-const { GridFSBucket } = require('mongodb');
 dotenv.config();
 
 const storage = new GridFsStorage({
@@ -28,7 +25,6 @@ const storage = new GridFsStorage({
       })
     }
   })
-
 
 const upload = multer({ storage });
 

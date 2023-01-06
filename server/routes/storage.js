@@ -3,7 +3,8 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const {upload} = require('../middleware/storage')
 const dotenv = require('dotenv');
-const { default: mongoose } = require('mongoose');
+const fs = require('fs');
+const { default: mongoose, Collection } = require('mongoose');
 const { GridFSBucket } = require('mongodb');
 dotenv.config();
 
@@ -12,14 +13,8 @@ const conn = mongoose.createConnection(process.env.URL, {
     useUnifiedTopology: true
 })
 
-// init gfs
-let gfs;
-conn.once("open", () => {
-  // init stream
-  gfs = new mongoose.mongo.GridFSBucket(conn.db, {
-    bucketName: "uploads"
-  });
-});
+const bucket = new GridFSBucket(conn, {bucketName: 'uploads'});
+
 
 router.use(bodyParser.urlencoded({ extended: true })); 
 
@@ -33,8 +28,10 @@ router.get('/', (req, res) => {
     res.end()
 })
 
-router.get('/getting', async (req, res) => {
-    console.log(gfs)
+router.get('/download', (req, res) => {
+
+    const files = bucket.openDownloadStreamByName('3987a162969935378c4f8cbe5d95bb46.svg').pipe(fs.createWriteStream('./3987a162969935378c4f8cbe5d95bb46.svg'))
+    res.set('Content-Type', 'attachment');
     res.end()
 })
 
