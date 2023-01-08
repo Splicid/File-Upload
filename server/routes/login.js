@@ -6,9 +6,16 @@ const passport = require('passport');
 const connectEnsureLogin = require('connect-ensure-login')
 const session = require("express-session");
 const LocalStrategy = require('passport-local').Strategy
+const { default: mongoose, Collection } = require('mongoose');
+const { GridFSBucket } = require('mongodb');
+
+const conn = mongoose.createConnection(process.env.URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+
 
 router.use(bodyParser.urlencoded({ extended: true })); 
-
 router.use(session({
     secret: process.env.SESSIONKEY,
     resave: false,
@@ -39,13 +46,16 @@ router.post('/logging', passport.authenticate('local', { failureRedirect: '/' })
 	res.redirect('/login/dashboard')
 });
 
-router.get('/dashboard', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
+router.get('/dashboard', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
     // res.send(`Hello ${req.user.username}. Your session ID is ${req.sessionID} 
     //  and your session expires in ${req.session.cookie.maxAge} 
     //  milliseconds.<br><br>
     //  <a href="logout">Log Out</a><br><br>
     //  <a href="secret">Members Only</a>`);
-    res.render('file-page')
+    const bucket = new GridFSBucket(conn, {bucketName: 'uploads'});
+    const file = bucket.find({});
+    //file.forEach(doc => console.log(doc))
+    res.render('file-page', {test: JSON.stringify(file)})
 });
 
 router.get('/secret', connectEnsureLogin.ensureLoggedIn(), (req, res) => {

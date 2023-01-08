@@ -5,7 +5,6 @@ const userRegister      = require('./routes/register');
 const storageUser       = require('./routes/storage')
 const bodyParser        = require('body-parser');
 const app               = express();
-const json2xls = require('json2xls');
 const port              = 3000;
 const dotenv            = require('dotenv');
 dotenv.config();
@@ -14,7 +13,6 @@ dotenv.config();
 app.use("/login", userLogin)
 app.use("/register", userRegister)
 app.use("/upload", storageUser)
-app.use(json2xls.middleware);
 app.set("view engine", "ejs")
 app.use(express.static(__dirname + "/style"))
 app.use(express.json());
