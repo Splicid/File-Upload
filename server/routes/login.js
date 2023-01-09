@@ -3,10 +3,11 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const User = require("../models/user");
 const passport = require('passport');
-const connectEnsureLogin = require('connect-ensure-login')
+const connectEnsureLogin = require('connect-ensure-login');
 const session = require("express-session");
 const LocalStrategy = require('passport-local').Strategy
 const { default: mongoose, Collection } = require('mongoose');
+const ejs = require('ejs');
 const { GridFSBucket } = require('mongodb');
 
 const conn = mongoose.createConnection(process.env.URL, {
@@ -42,7 +43,6 @@ router.get('/', (req, res) => {
 })
 
 router.post('/logging', passport.authenticate('local', { failureRedirect: '/' }),  function(req, res) {
-	//console.log(req.user)
 	res.redirect('/login/dashboard')
 });
 
@@ -52,10 +52,15 @@ router.get('/dashboard', connectEnsureLogin.ensureLoggedIn(), async (req, res) =
     //  milliseconds.<br><br>
     //  <a href="logout">Log Out</a><br><br>
     //  <a href="secret">Members Only</a>`);
+    const fileNames = []
+    // file.forEach(doc => data.push(doc.filename))
+    // console.log(data)
+    // 
     const bucket = new GridFSBucket(conn, {bucketName: 'uploads'});
     const file = bucket.find({});
-    //file.forEach(doc => console.log(doc))
-    res.render('file-page', {test: JSON.stringify(file)})
+    await file.forEach(data => fileNames.push(data.filename))
+    res.render('file-page', {test: fileNames})
+    console.log(fileNames)
 });
 
 router.get('/secret', connectEnsureLogin.ensureLoggedIn(), (req, res) => {

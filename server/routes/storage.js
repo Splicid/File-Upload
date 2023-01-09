@@ -19,6 +19,9 @@ dotenv.config();
 // const bucket = new GridFSBucket(conn, {bucketName: 'uploads'});
 // const file = bucket.find({});
 
+router.post('/', upload.single('filename'), (req, res) => {
+    res.end();
+})
 
 router.get('/download', (req, res) => {
 
