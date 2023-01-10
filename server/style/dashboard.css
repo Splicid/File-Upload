@@ -1,0 +1,14 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+body{
+    background-color: black;
+}
+.dashDownload{
+    color: rgb(77, 142, 199);
+    border: outset rgb(0, 60, 255) 5px;
+    padding: 1rem;
+}
+.container{
+    width: 50%;
+}
