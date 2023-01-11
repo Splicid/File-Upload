@@ -5,10 +5,18 @@ body{
     background-color: black;
 }
 .dashDownload{
-    color: rgb(77, 142, 199);
+    display: flex;
+    flex-direction: row;
     border: outset rgb(0, 60, 255) 5px;
-    padding: 1rem;
 }
 .container{
-    width: 50%;
+    color: rgb(77, 142, 199);
+    padding: 1rem;
+    word-break: break-all;
+    font-size: 0.8rem;
+    font-family: 'Courier New', Courier, monospace;
+}
+.item-button{
+    align-items: flex-end;
+    margin-left: auto;
 }
