@@ -6,17 +6,17 @@ body{
 }
 .dashDownload{
     display: flex;
-    flex-direction: row;
+    flex-flow: row wrap;
     border: outset rgb(0, 60, 255) 5px;
 }
 .container{
     color: rgb(77, 142, 199);
     padding: 1rem;
     word-break: break-all;
-    font-size: 0.8rem;
+    font-size: 1rem;
     font-family: 'Courier New', Courier, monospace;
 }
 .item-button{
-    align-items: flex-end;
+    background-color: red;
     margin-left: auto;
 }
