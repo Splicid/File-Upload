@@ -56,7 +56,7 @@ router.get('/dashboard', connectEnsureLogin.ensureLoggedIn(), async (req, res) =
     // file.forEach(doc => data.push(doc.filename))
     // console.log(data)
     // 
-    const bucket = new GridFSBucket(conn, {bucketName: 'uploads'});
+    const bucket = new GridFSBucket(conn.db, {bucketName: 'uploads'});
     const file = bucket.find({});
     await file.forEach(data => fileNames.push(data))
     //console.log(fileNames[0])
@@ -70,9 +70,9 @@ router.get('/secret', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
 
 router.post('/files/:id', (req, res) => {
     console.log('test')
-    const bucket = new GridFSBucket(conn, {bucketName: 'uploads'});
-    console.log(bucket)
-    GridFSBucket.delete(req.params.id)
+    const bucket = new mongoose.mongo.GridFSBucket(conn.db, {bucketName: 'uploads'});
+    console.log(req.params.id)
+    bucket.delete(ObjectId(req.params.id));
     res.redirect('/dashboard')
 })
 
