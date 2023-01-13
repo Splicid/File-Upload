@@ -14,10 +14,12 @@
     </form>
     <div class="container">
         <% test.forEach(element => { %> 
-        <div class="dashDownload">
-            <%= element %> 
-            <button class="item-button"> Delete </button>
-        </div>
+        <form method="POST" action="files/<%= element._id %>?_method=DELETE">
+            <div class="dashDownload">
+                <%= element.filename %> 
+                    <button class="item-button"> Delete </button>
+            </div>
+        </form>
         <% }); %> 
     </div>
 </body>

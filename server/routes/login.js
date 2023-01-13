@@ -8,7 +8,7 @@ const session = require("express-session");
 const LocalStrategy = require('passport-local').Strategy
 const { default: mongoose, Collection } = require('mongoose');
 const ejs = require('ejs');
-const { GridFSBucket } = require('mongodb');
+const { GridFSBucket, ObjectId } = require('mongodb');
 
 const conn = mongoose.createConnection(process.env.URL, {
     useNewUrlParser: true,
@@ -58,14 +58,23 @@ router.get('/dashboard', connectEnsureLogin.ensureLoggedIn(), async (req, res) =
     // 
     const bucket = new GridFSBucket(conn, {bucketName: 'uploads'});
     const file = bucket.find({});
-    await file.forEach(data => fileNames.push(data.filename))
+    await file.forEach(data => fileNames.push(data))
+    //console.log(fileNames[0])
     res.render('file-page', {test: fileNames})
-    console.log(fileNames)
+    //console.log(fileNames)
 });
 
 router.get('/secret', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
     res.send("Secret Page")
 });
+
+router.post('/files/:id', (req, res) => {
+    console.log('test')
+    const bucket = new GridFSBucket(conn, {bucketName: 'uploads'});
+    console.log(bucket)
+    GridFSBucket.delete(req.params.id)
+    res.redirect('/dashboard')
+})
 
 router.get('/logout', function(req, res, next) {
     console.log("Logged out")
