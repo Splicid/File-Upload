@@ -17,7 +17,8 @@
         <form method="POST" action="files/<%= element._id %>?_method=DELETE">
             <div class="dashDownload">
                 <%= element.filename %> 
-                    <button class="item-button"> Delete </button>
+                    <button class="item-delete"> Delete </button>
+                    <button class="item-download" formaction="/test"> Download</button>
             </div>
         </form>
         <% }); %> 

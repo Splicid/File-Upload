@@ -20,7 +20,7 @@ dotenv.config();
 // const file = bucket.find({});
 
 router.post('/', upload.single('filename'), (req, res) => {
-    res.end();
+    res.redirect('back');
 })
 
 router.get('/download', (req, res) => {

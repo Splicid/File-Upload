@@ -73,7 +73,7 @@ router.post('/files/:id', (req, res) => {
     const bucket = new mongoose.mongo.GridFSBucket(conn.db, {bucketName: 'uploads'});
     console.log(req.params.id)
     bucket.delete(ObjectId(req.params.id));
-    res.redirect('/dashboard')
+    res.redirect('back');
 })
 
 router.get('/logout', function(req, res, next) {
