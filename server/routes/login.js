@@ -8,7 +8,9 @@ const session = require("express-session");
 const LocalStrategy = require('passport-local').Strategy
 const { default: mongoose, Collection } = require('mongoose');
 const ejs = require('ejs');
+const fs = require('fs');
 const { GridFSBucket, ObjectId } = require('mongodb');
+const { deflateRawSync } = require("zlib");
 
 const conn = mongoose.createConnection(process.env.URL, {
     useNewUrlParser: true,
@@ -47,21 +49,11 @@ router.post('/logging', passport.authenticate('local', { failureRedirect: '/' })
 });
 
 router.get('/dashboard', connectEnsureLogin.ensureLoggedIn(), async (req, res) => {
-    // res.send(`Hello ${req.user.username}. Your session ID is ${req.sessionID} 
-    //  and your session expires in ${req.session.cookie.maxAge} 
-    //  milliseconds.<br><br>
-    //  <a href="logout">Log Out</a><br><br>
-    //  <a href="secret">Members Only</a>`);
     const fileNames = []
-    // file.forEach(doc => data.push(doc.filename))
-    // console.log(data)
-    // 
     const bucket = new GridFSBucket(conn.db, {bucketName: 'uploads'});
     const file = bucket.find({});
     await file.forEach(data => fileNames.push(data))
-    //console.log(fileNames[0])
     res.render('file-page', {test: fileNames})
-    //console.log(fileNames)
 });
 
 router.get('/secret', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
@@ -74,6 +66,12 @@ router.post('/files/:id', (req, res) => {
     console.log(req.params.id)
     bucket.delete(ObjectId(req.params.id));
     res.redirect('back');
+})
+
+router.get('/download/:id', (req, res) => {
+    const bucket = new GridFSBucket(conn.db, {bucketName: 'uploads'});
+    const files = bucket.openDownloadStream(ObjectId(req.params.id)).pipe(res)
+    console.log(res)
 })
 
 router.get('/logout', function(req, res, next) {

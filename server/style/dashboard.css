@@ -17,7 +17,7 @@ body{
     font-family: 'Courier New', Courier, monospace;
 }
 .item-delete{
-    background-color: red;
+    background-color: rgb(161, 42, 42);
     margin-left: auto;
 }
 .item-download{
