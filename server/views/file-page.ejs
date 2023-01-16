@@ -18,7 +18,7 @@
             <div class="dashDownload">
                 <%= element.filename %> 
                     <button class="item-delete"> Delete </button>
-                    <button class="item-download"  formmethod="GET" formaction="download/<%= element._id %>"> Download</button>
+                    <button class="item-download"  formmethod="GET" formaction="download/<%= element.filename %>"> Download</button>
             </div>
         </form>
         <% }); %> 

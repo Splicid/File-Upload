@@ -6,6 +6,7 @@ const passport = require('passport');
 const connectEnsureLogin = require('connect-ensure-login');
 const session = require("express-session");
 const LocalStrategy = require('passport-local').Strategy
+const mime = require('mime');
 const { default: mongoose, Collection } = require('mongoose');
 const ejs = require('ejs');
 const fs = require('fs');
@@ -68,10 +69,12 @@ router.post('/files/:id', (req, res) => {
     res.redirect('back');
 })
 
-router.get('/download/:id', (req, res) => {
+router.get('/download/:name', (req, res) => {
     const bucket = new GridFSBucket(conn.db, {bucketName: 'uploads'});
-    const files = bucket.openDownloadStream(ObjectId(req.params.id)).pipe(res)
-    console.log(res)
+    const files = bucket.openDownloadStreamByName(req.params.name).pipe(res)
+    res.set('Content-Type', mime.getType(req.params.name))
+    res.set('Content-Disposition', 'attachment; filename="' + req.params.name + '"')
+    //console.log(mime.getType(req.params.name))
 })
 
 router.get('/logout', function(req, res, next) {
