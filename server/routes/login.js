@@ -18,7 +18,6 @@ const conn = mongoose.createConnection(process.env.URL, {
     useUnifiedTopology: true
 })
 
-
 router.use(bodyParser.urlencoded({ extended: true })); 
 router.use(session({
     secret: process.env.SESSIONKEY,
@@ -61,7 +60,7 @@ router.get('/secret', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
     res.send("Secret Page")
 });
 
-router.post('/files/:id', (req, res) => {
+router.post('/files/:id', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
     console.log('test')
     const bucket = new mongoose.mongo.GridFSBucket(conn.db, {bucketName: 'uploads'});
     console.log(req.params.id)
@@ -69,12 +68,12 @@ router.post('/files/:id', (req, res) => {
     res.redirect('back');
 })
 
-router.get('/download/:name', (req, res) => {
+router.get('/download/:name', connectEnsureLogin.ensureLoggedIn(), (req, res) => {
     const bucket = new GridFSBucket(conn.db, {bucketName: 'uploads'});
     const files = bucket.openDownloadStreamByName(req.params.name).pipe(res)
     res.set('Content-Type', mime.getType(req.params.name))
     res.set('Content-Disposition', 'attachment; filename="' + req.params.name + '"')
-    //console.log(mime.getType(req.params.name))
+    //console.log(req.isAuthenticated())
 })
 
 router.get('/logout', function(req, res, next) {
@@ -85,5 +84,4 @@ router.get('/logout', function(req, res, next) {
     });
 });
 
- //const data  = await accountCreation(req.body.username, req.body.password, "this is a test account")
 module.exports = router;

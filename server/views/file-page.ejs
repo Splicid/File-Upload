@@ -8,20 +8,23 @@
     <title>File Upload</title>
 </head>
 <body>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" id="myFile" name="filename">
-        <input type="submit">
-    </form>
-    <div class="container">
-        <% test.forEach(element => { %> 
-        <form method="POST" action="files/<%= element._id %>?_method=DELETE">
-            <div class="dashDownload">
-                <%= element.filename %> 
-                    <button class="item-delete"> Delete </button>
-                    <button class="item-download"  formmethod="GET" formaction="download/<%= element.filename %>"> Download</button>
-            </div>
+    <h1 class="heading"> Welcome to our database! </h1>
+    <div class="main-container">
+        <form id="files-search" action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" id="myFile" name="filename">
+            <input id="mySubmit" type="submit">
         </form>
-        <% }); %> 
+        <div class="child-container">
+            <% test.forEach(element => { %> 
+            <form method="POST" action="files/<%= element._id %>?_method=DELETE">
+                <div class="dashDownload">
+                    <%= element.filename %> 
+                        <button class="item-delete"> Delete </button>
+                        <button class="item-download"  formmethod="GET" formaction="download/<%= element.filename %>"> Download</button>
+                </div>
+            </form>
+            <% }); %> 
+        </div>
     </div>
 </body>
 </html>

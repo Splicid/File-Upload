@@ -3,23 +3,36 @@
 }
 body{
     background-color: black;
+    color: yellow;
+}
+.main-container{
+    outline: solid 1px green;
+    text-align: center;
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 .dashDownload{
-    display: flex;
-    flex-flow: row wrap;
-    border: outset rgb(0, 60, 255) 5px;
+    padding: 20px;
+    font-size: clamp(1rem, 2.5vw, 2rem); 
 }
-.container{
-    color: rgb(77, 142, 199);
-    padding: 1rem;
-    word-break: break-all;
-    font-size: 4rem;
-    font-family: 'Courier New', Courier, monospace;
+#myFile{
+    font-size: clamp(1rem, 2.5vw, 2rem); 
+}
+#mySubmit{
+    font-size: clamp(1rem, 2.5vw, 2rem); 
+}
+.heading{
+    text-align: center;
 }
 .item-delete{
     background-color: rgb(161, 42, 42);
     margin-left: auto;
+    font-size: clamp(0.8rem, 2.0vw, 1.7rem); 
 }
 .item-download{
     background-color: rgb(116, 116, 185);
+    font-size: clamp(0.8rem, 2.0vw, 1.7rem); 
 }

@@ -25,11 +25,11 @@ router.post('/', upload.single('filename'), (req, res) => {
 
 router.get('/download', (req, res) => {
 
-    //const files = bucket.openDownloadStreamByName('3987a162969935378c4f8cbe5d95bb46.svg').pipe(fs.createWriteStream('downloads/3987a162969935378c4f8cbe5d95bb46.svg'))
-    //let file = __dirname + '/3987a162969935378c4f8cbe5d95bb46.svg'
-    //console.log(path.join(__dirname, '..', files.path))
-    //const filePath = files.path
-    //res.download(path.join(__dirname, '..', filePath))
+    const files = bucket.openDownloadStreamByName('3987a162969935378c4f8cbe5d95bb46.svg').pipe(fs.createWriteStream('downloads/3987a162969935378c4f8cbe5d95bb46.svg'))
+    let file = __dirname + '/3987a162969935378c4f8cbe5d95bb46.svg'
+    console.log(path.join(__dirname, '..', files.path))
+    const filePath = files.path
+    res.download(path.join(__dirname, '..', filePath))
 })
 
 
