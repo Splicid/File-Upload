@@ -9,16 +9,6 @@ const { default: mongoose, Collection } = require('mongoose');
 const { GridFSBucket } = require('mongodb');
 dotenv.config();
 
-// const conn = mongoose.createConnection(process.env.URL, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-// })
-
-
-
-// const bucket = new GridFSBucket(conn, {bucketName: 'uploads'});
-// const file = bucket.find({});
-
 router.post('/', upload.single('filename'), (req, res) => {
     res.redirect('back');
 })

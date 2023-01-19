@@ -16,7 +16,7 @@ router.post("/signup", function (req, res) {
         if (err) {
             res.json({success: false, message: "Account was not created " + err})
         } else{
-            res.json({seccess: true, message: "Account was created"})
+            res.redirect('/login')
         }
     });
 });

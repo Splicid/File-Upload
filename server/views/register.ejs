@@ -4,20 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="register.css">
     <title>Document</title>
 </head>
 <body>
-    <h1>Register Page</h1>
-    <form action="register/signup" method="post">
-        <section>
-            <label for="username">Username</label>
-            <input id="username" name="username" type="text" autocomplete="username">
-        </section>
-        <section>
-            <label for="current-password">Password</label>
-            <input id="current-password" name="password" type="password" autocomplete="current-password">
-        </section>
-        <button type="submit">Sign in</button>
-    </form> 
+    <h1 class="main-heading">Register Page</h1>
+    <div class="container">
+        <div class="form-container">
+            <form action="register/signup" method="post">
+                <section>
+                    <label for="username">Username</label>
+                    <input id="username" name="username" type="text" autocomplete="username">
+                </section>
+                <section>
+                    <label for="current-password">Password</label>
+                    <input id="current-password" name="password" type="password" autocomplete="current-password">
+                </section>
+                <button class="form-button" type="submit">Register</button>
+            </form>
+        </div>
+    </div> 
 </body>
 </html>

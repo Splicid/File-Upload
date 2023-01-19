@@ -8,10 +8,7 @@ const session = require("express-session");
 const LocalStrategy = require('passport-local').Strategy
 const mime = require('mime');
 const { default: mongoose, Collection } = require('mongoose');
-const ejs = require('ejs');
-const fs = require('fs');
 const { GridFSBucket, ObjectId } = require('mongodb');
-const { deflateRawSync } = require("zlib");
 
 const conn = mongoose.createConnection(process.env.URL, {
     useNewUrlParser: true,
